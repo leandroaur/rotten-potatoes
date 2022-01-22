@@ -23,8 +23,8 @@ jobs:
         uses: docker/build-push-action@v2.7.0 
         with:
           context: ./src
-          file: ./src/Dockerfile
+          no-cache: true
           push: true
-          tags:
+          tags: |
             leandroaurelio/rotten-potatoes:latest
             leandroaurelio/rotten-potatoes:v${{ github.run_number}}
