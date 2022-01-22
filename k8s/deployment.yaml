@@ -3,7 +3,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb-deployment
+  name: mongodb
 spec:
   selector:
     matchLabels:
@@ -30,7 +30,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongodb-service
+  name: mongodb
 spec:
   selector:
     app: mongodb
@@ -46,19 +46,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-deployment
+  name: website
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: web
+      app: website
   template:
     metadata:
       labels:
-        app: web
+        app: website
     spec:
       containers:
-      - name: web
-        image: leandroaurelio/rotten-potatoes:v1
+      - name: website
+        image: leandroaurelio/rotten-potatoes
         ports:
         - containerPort: 5000
         env:
@@ -78,13 +79,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-service
+  name: website
 spec:
   selector:
-    app: web
+    app: website
   ports:
   - port: 80
     targetPort: 5000
-    nodePort: 30000
+    # nodePort: 30000
 
-  type: NodePort
+  type: LoadBalancer
